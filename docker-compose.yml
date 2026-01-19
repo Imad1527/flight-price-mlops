@@ -1,0 +1,24 @@
+version: '3'
+services:
+  airflow:
+    image: apache/airflow:latest
+    environment:
+      - LOAD_EX=y
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    ports:
+      - "8080:8080"
+    command: webserver
+  airflow-init:
+    image: apache/airflow:latest
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    entrypoint: ["airflow", "db", "init"]
+volumes:
+  airflow-dags:
+  airflow-logs:
+  airflow-plugins:
