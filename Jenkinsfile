@@ -1,47 +1,40 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "flight-price-api"
-        K8S_DEPLOYMENT = "flight-price-deployment"
-    }
-
     stages {
-
-        stage('Clone Repository') {
+        stage('Verify Environment') {
             steps {
-                echo 'Cloning source code...'
+                echo 'Jenkins pipeline started'
+                bat 'docker --version'
+                bat 'kubectl version --client'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r api/requirements.txt'
-            }
-        }
-
-        stage('Run API Tests') {
-            steps {
-                echo 'Running basic API validation...'
+                echo 'Installing Python dependencies'
+                bat 'python --version'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:latest .'
+                echo 'Building Docker image'
+                bat 'docker build -t flight-price-api:latest .'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f deployment.yml'
+                echo 'Deploying to Kubernetes'
+                bat 'kubectl apply -f k8s/'
             }
         }
     }
 
     post {
         success {
-            echo 'CI/CD Pipeline executed successfully!'
+            echo 'Pipeline completed successfully'
         }
         failure {
             echo 'Pipeline failed. Check logs.'
