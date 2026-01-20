@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gender-classification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gender-classification
+  template:
+    metadata:
+      labels:
+        app: gender-classification
+    spec:
+      containers:
+      - name: gender-classification
+        image: gender-classification:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
