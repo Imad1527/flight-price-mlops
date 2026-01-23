@@ -6,22 +6,32 @@ __pycache__/
 
 # Virtual environment
 venv/
+.env
+
+# ML artifacts / data
+*.pkl
+*.joblib
+mlflow.db
+flights.csv
 
 # MLflow
-mlflow.db
 mlruns/
 
-# Model artifacts (keep only small pkl files if needed)
-*.pt
-*.ckpt
-*.h5
+# Jupyter
+.ipynb_checkpoints/
 
-# OS
+# OS / IDE
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
 
-# IDE
-.vscode/
-
 # Docker
 *.log
+
+# Airflow
+airflow-docker/logs/
+airflow-docker/plugins/__pycache__/
+
+# Kubernetes
+*.tar
